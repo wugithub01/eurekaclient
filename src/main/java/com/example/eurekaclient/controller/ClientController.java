@@ -1,5 +1,6 @@
 package com.example.eurekaclient.controller;
 
+import com.example.eurekaclient.client.ProductClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.client.ServiceInstance;
 import org.springframework.cloud.client.loadbalancer.LoadBalancerClient;
@@ -10,10 +11,14 @@ import org.springframework.web.client.RestTemplate;
 @RestController
 public class ClientController {
 
-//    @Autowired
-//     private LoadBalancerClient loadBalancerClient;
+    @Autowired
+     private LoadBalancerClient loadBalancerClient;
      @Autowired
      private RestTemplate restTemplate;
+
+    @Autowired
+    private  ProductClient productClient;
+
     @GetMapping("/getProductMsg")
     public String getProductMsg(){
         //1. 第一种方式
@@ -26,7 +31,9 @@ public class ClientController {
 //        String url = String.format("http://%s:%s", product.getHost(), product.getPort()) + "/msg";
 //        String  response =  restTemplate.getForObject(url,String.class);
         // 3. 第三种方式
-        String response = restTemplate.getForObject("http://PRODUCT/msg", String.class);
+//        String response = restTemplate.getForObject("http://PRODUCT/msg", String.class);
+        //  使用 feign 方式 调用
+        String response =  productClient.productMsg();
         return response;
     }
 
