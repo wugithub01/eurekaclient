@@ -1,0 +1,11 @@
+
+spring:
+  application:
+    name: client
+  cloud:
+    config:
+      discovery:
+        enabled: true
+        #server端应用得名称
+        service-id: CONFIG
+      profile: dev
